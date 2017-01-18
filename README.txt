@@ -1,3 +1,6 @@
+I'll be very appreciate if you make the program by Python3,wxPython-Phoenix!
+
+
 ---------------
 Pyinstaller GUI
 ---------------
