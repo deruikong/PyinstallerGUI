@@ -16,8 +16,8 @@ class MainFrame(wx.Frame):
         self.iconentry = wx.TextCtrl(self, wx.ID_ANY, "")
         self.browseico = wx.Button(self, wx.ID_ANY, "Browse")
         self.Bind(wx.EVT_BUTTON, self.browsecomico, self.browseico)
-        self.radio_box_1 = wx.RadioBox(self, wx.ID_ANY, "Output Type", choices=[("one folder"), ("one file")], majorDimension=2, style=wx.RA_SPECIFY_ROWS)
-        self.radio_box_2 = wx.RadioBox(self, wx.ID_ANY, "GUI or CLI", choices=[('CLI'),("GUI(Qt, Wx etc.)")], majorDimension=2, style=wx.RA_SPECIFY_ROWS)
+        self.FileType = wx.RadioBox(self, wx.ID_ANY, "Output Type", choices=[("one folder"), ("one file")], majorDimension=2, style=wx.RA_SPECIFY_ROWS)
+        self.WindowType = wx.RadioBox(self, wx.ID_ANY, "GUI or CLI", choices=[('CLI'),("GUI(Qt, Wx etc.)")], majorDimension=2, style=wx.RA_SPECIFY_ROWS)
         self.RunButton=wx.Button(self,wx.ID_ANY,'Compile(Build) Program')
         self.Bind(wx.EVT_BUTTON, self.run, self.RunButton)
         self.Quit=wx.Button(self,wx.ID_ANY,'Cancel')
@@ -26,43 +26,46 @@ class MainFrame(wx.Frame):
         self.__set_properties()
         self.__do_layout()
         self.install()
+        self.FileFilt()
+        self
         self.Update()
 
     def __set_properties(self):
         self.SetTitle("Compiler")
-        self.radio_box_1.SetSelection(0)
-        self.radio_box_2.SetSelection(0)
+        self.FileType.SetSelection(0)
+        self.WindowType.SetSelection(0)
 
     def __do_layout(self):
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_1 = wx.GridSizer(1, 3, 0, 0)
-        grid_sizer_2=wx.GridSizer(1,3,0,0)
+        grid_sizer_2 = wx.GridSizer(1, 3, 0,0)
         grid_sizer_3 = wx.GridSizer(1, 2, 0, 0)
-        grid_sizer_4=wx.GridSizer(1,2,0,0)
+        grid_sizer_4 = wx.GridSizer(1, 2, 0,0)
         grid_sizer_1.Add(self.filelabel, 0, 0, 0)
         grid_sizer_1.Add(self.fileentry, 0, 0, 0)
         grid_sizer_1.Add(self.browsefile, 0, 0, 0)
         grid_sizer_2.Add(self.iconlabel, 0, 0, 0)
         grid_sizer_2.Add(self.iconentry, 0, 0, 0)
         grid_sizer_2.Add(self.browseico, 0, 0, 0)
-        grid_sizer_3.Add(self.radio_box_1, 0, 0, 0)
-        grid_sizer_3.Add(self.radio_box_2, 0, 0, 0)
-        grid_sizer_4.Add(self.Quit,0,0,0)
-        grid_sizer_4.Add(self.RunButton,0,0,0)
-        sizer_1.Add(grid_sizer_1,1, 0, 0)
+        grid_sizer_3.Add(self.FileType, 0, 0, 0)
+        grid_sizer_3.Add(self.WindowType, 0, 0, 0)
+        grid_sizer_4.Add(self.Quit, 0, 0, 0)
+        grid_sizer_4.Add(self.RunButton, 0, 0, 0)
+        sizer_1.Add(grid_sizer_1, 1, 0, 0)
         sizer_1.Add(grid_sizer_2, 1, 0, 0)
-        sizer_1.Add(grid_sizer_3,1, 0, 0)
+        sizer_1.Add(grid_sizer_3, 1, 0, 0)
         sizer_1.Add(grid_sizer_4, 1, 0, 0)
         self.SetSizer(sizer_1)
         sizer_1.Fit(self)
         self.Layout()
         sizer_1.Clear()
 
+		
     def install(self):
         os.system('%s\\Scripts\\easy_install.exe pyinstaller' % sys.prefix)
         if os.path.isfile('%s\\Scripts\\pyinstaller.exe'%sys.prefix) == False:
             ErroR=wx.MessageDialog(None, 'You got an error during installing. Retry?', 'Error', wx.YES_NO | wx.ICON_ERROR)
-            if ErroR.ShowModal()==wx.ID_YES:
+            if ErroR.ShowModal() == wx.ID_YES:
                 self.install()
             else:
                 self.Exit(event=None)
@@ -72,15 +75,15 @@ class MainFrame(wx.Frame):
 
     def run(self,event):
         global control
-        radioget=self.radio_box_1.GetSelection()
-        radioget1=self.radio_box_2.GetSelection()
-        if radioget==1:
+        radioget = self.FileType.GetSelection()
+        radioget1 = self.WindowType.GetSelection()
+        if radioget == 1:
             filetype = '-D'
-        elif radioget==0:
+        elif radioget == 0:
             filetype = '-F'
         if radioget1 == 0:
             guicli = '-c'
-        elif radioget1==1:
+        elif radioget1 == 1:
             guicli='-w'
 
         if '.py' in self.fileentry.GetValue() or '.spec' in self.fileentry.GetValue():
