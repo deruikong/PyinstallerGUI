@@ -86,9 +86,7 @@ class MainFrame(wx.Frame):
         if '.py' in self.fileentry.GetValue() or '.spec' in self.fileentry.GetValue():
             try:
                 if len(self.IcoDialog.GetFilename()) == 0:
-                    control = '%s\\Script\\pyinstaller.exe %s %s %s'%(sys.prefix,filetype,guicli,self.fileentry.GetValue())
-                if len(IcoDialog.GetFilename()) == 0:
-                    control = 'pyinstaller %s %s %s'%(filetype,guicli,self.fileentry.GetValue())
+                    control = '%s\\Scripts\\pyinstaller.exe %s %s %s'%(sys.prefix,filetype,guicli,self.fileentry.GetValue())
 
                 else:
                     control = '%s\\Scripts\\pyinstaller.exe %s %s -i="%s" %s'%(sys.prefix,filetype,guicli,self.iconentry.GetValue(),self.fileentry.GetValue())
