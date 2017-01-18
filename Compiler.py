@@ -84,7 +84,7 @@ class MainFrame(wx.Frame):
         if radioget1 == 0:
             guicli = '-c'
         elif radioget1 == 1:
-            guicli='-w'
+            guicli = '-w'
 
         if '.py' in self.fileentry.GetValue() or '.spec' in self.fileentry.GetValue():
             try:
@@ -100,14 +100,14 @@ class MainFrame(wx.Frame):
 
 
             if '.py' in self.filename:
-                if self.radio_box_1.GetSelection()==1:
+                if self.radio_box_1.GetSelection() == 1:
 
                     name = self.filename.replace('.py', '.exe')
                 else:
                     name = self.filename.replace('.py', '')
 
             elif '.spec' in self.filename:
-                if self.radio_box_1.GetSelection()==1:
+                if self.radio_box_1.GetSelection() == 1:
                     name = self.filename.replace('.spec', '.exe')
                 else:
                     name = self.filename.replace('.spec', '')
@@ -115,13 +115,13 @@ class MainFrame(wx.Frame):
                 finishcompile = wx.MessageDialog(None, 'Finish Compiling!', 'Compiled', wx.OK | wx.ICON_INFORMATION)
                 finishcompile.ShowModal()
             else:
-                ErroR=wx.MessageDialog(None,'You got an error during compiling, you can type %s in shell to see the error'%control,'Error',wx.OK|wx.ICON_ERROR)
+                ErroR = wx.MessageDialog(None,'You got an error during compiling, you can type %s in shell to see the error'%control,'Error',wx.OK|wx.ICON_ERROR)
                 ErroR.ShowModal()
 
 
         else:
-            select=wx.MessageDialog(None,'Please select a file!','Select',wx.YES_NO|wx.ICON_INFORMATION)
-            if select.ShowModal()==wx.ID_YES:
+            select=wx.MessageDialog(None, 'Please select a file!','Select',wx.YES_NO|wx.ICON_INFORMATION)
+            if select.ShowModal() == wx.ID_YES:
                 self.browsecomfile(event=None)
 
 
