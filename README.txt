@@ -30,4 +30,3 @@ Mailing List
 
 deruikong77@gmail.com
 kdr1125@qq.com
-xiaobinkong@gmail
