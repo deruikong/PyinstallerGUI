@@ -5,10 +5,10 @@ import getpass
 import sys
 
 def getver():
-    global shortver
+    global finalver
     fullver=sys.version
     shortver=fullver[0:3]
-    shortver.replace('.','')
+    finalver=shortver.replace('.','')
 getver()
 
 class MainFrame(wx.Frame):
@@ -71,19 +71,21 @@ class MainFrame(wx.Frame):
         sys.exit()
 
     def inPath(self):
-        if  'Python%s\\Scripts'%shortver in os.environ['PATH']==False:
-            warn=wx.MessageDialog(None,'Seems you didn\'t Add Python%s\\Scripts to PATH. Please add it then restart'%shortver,wx.OK|wx.ICON_WARNING)
-            if warn.ShowModal()==wx.ID_OK:
-                sys.exit()
+        if  'Python%s\\Scripts'%finalver in os.environ['PATH']:
+            print getpass.getuser()
+        elif 'Python%s\\Scripts'%finalver in os.environ['PATH']==False:
+            warn=wx.MessageDialog(None,'Seems you didn\'t Add Python%s\\Scripts to PATH. Please add it then restart'%finalver,'Warning',wx.OK|wx.ICON_WARNING)
+            warn.ShowModal()
+            sys.exit()
 
     def run(self,event):
         radioget = self.FileType.GetSelection()
         radioget1 = self.WindowType.GetSelection()
         filename=str(self.fileentry.GetValue())
         if radioget == 1:
-            filetype = '-D'
-        elif radioget == 0:
             filetype = '-F'
+        elif radioget == 0:
+            filetype = '-D'
         if radioget1 == 0:
             guicli = '-c'
         elif radioget1 == 1:
@@ -109,17 +111,17 @@ class MainFrame(wx.Frame):
                 name=os.path.basename(filename)
                 if '.py' in name:
                     if radioget==0:
-                        name.replace('.py','')
+                        realname=name.replace('.py','')
                     elif radioget==1:
-                        name.replace('.py','.exe')
+                        realname=name.replace('.py','.exe')
                 elif '.spec' in name:
                     if radioget==0:
-                        name.replace('.spec','')
+                        realname=name.replace('.spec','')
                     elif radioget==1:
-                        name.replace('.spec','.exe')
+                       realname=name.replace('.spec','.exe')
 
-                if name in str(os.listdir('%s\\dist' % os.getcwd())):
-                    finishcompile = wx.MessageDialog(None, 'Finish Compiling!', 'Compiled', wx.OK | wx.ICON_INFORMATION)
+                if realname in str(os.listdir('%s\\dist' % os.getcwd())):
+                    finishcompile = wx.MessageDialog(None, 'Finish Compiling!', 'Info', wx.OK | wx.ICON_INFORMATION)
                     finishcompile.ShowModal()
                 else:
 
@@ -128,7 +130,7 @@ class MainFrame(wx.Frame):
 
 
         else:
-            select=wx.MessageDialog(None, 'Please select a file!','Select',wx.YES_NO|wx.ICON_INFORMATION)
+            select=wx.MessageDialog(None, 'Please select a file!','Warning',wx.YES_NO|wx.ICON_INFORMATION)
             if select.ShowModal() == wx.ID_YES:
                 self.browsecomfile(event=None)
 
@@ -150,7 +152,7 @@ class MainFrame(wx.Frame):
             self.iconentry.SetValue(self.ico)
 
 if __name__ == '__main__':
-    app = wx.PySimpleApp()
+    app = wx.App()
     frame = MainFrame()
     frame.Show(True)
     app.MainLoop()
