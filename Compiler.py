@@ -3,37 +3,41 @@ import os
 import getpass
 import sys
 
+
 def getver():
     global finalver
-    fullver=sys.version
-    shortver=fullver[0:3]
-    finalver=shortver.replace('.','')
+    fullver = sys.version
+    shortver = fullver[0:3]
+    finalver = shortver.replace('.', '')
 getver()
+
 
 class MainFrame(wx.Frame):
     def __init__(self):
         wx.Frame.__init__(self, None, -1, 'MainFrame', size=(1000, 1000))
-        self.Font=wx.Font(13,wx.SWISS,wx.NORMAL,wx.NORMAL)
-        self.filelabel = wx.StaticText(self, wx.ID_ANY,"    File:")
+        self.Font = wx.Font(13, wx.SWISS, wx.NORMAL, wx.NORMAL)
+        self.filelabel = wx.StaticText(self, wx.ID_ANY, "    File:")
         self.filelabel.SetFont(self.Font)
         self.fileentry = wx.TextCtrl(self, wx.ID_ANY, "")
         self.browsefile = wx.Button(self, wx.ID_ANY, "Browse")
-        self.Bind(wx.EVT_BUTTON,self.browsecomfile, self.browsefile)
+        self.Bind(wx.EVT_BUTTON, self.browsecomfile, self.browsefile)
         self.iconlabel = wx.StaticText(self, wx.ID_ANY, "    Icon:")
         self.iconlabel.SetFont(self.Font)
         self.iconentry = wx.TextCtrl(self, wx.ID_ANY, "")
         self.browseico = wx.Button(self, wx.ID_ANY, "Browse")
         self.Bind(wx.EVT_BUTTON, self.browsecomico, self.browseico)
-        self.FileType = wx.RadioBox(self, wx.ID_ANY, "Output Type", choices=[("one folder"), ("one file")], majorDimension=2, style=wx.RA_SPECIFY_ROWS)
-        self.WindowType = wx.RadioBox(self, wx.ID_ANY, "GUI or CLI", choices=[('CLI'),("GUI(Qt, Wx etc.)")], majorDimension=2, style=wx.RA_SPECIFY_ROWS)
-        self.RunButton=wx.Button(self,wx.ID_ANY,'Compile Program')
+        self.FileType = wx.RadioBox(self, wx.ID_ANY, "Output Type", choices=[
+            "one folder", "one file"], majorDimension=2, style=wx.RA_SPECIFY_ROWS)
+        self.WindowType = wx.RadioBox(self, wx.ID_ANY, "GUI or CLI", choices=[
+            'CLI', "GUI(Qt, Wx etc.)"], majorDimension=2, style=wx.RA_SPECIFY_ROWS)
+        self.RunButton = wx.Button(self, wx.ID_ANY, 'Compile Program')
         self.Bind(wx.EVT_BUTTON, self.run, self.RunButton)
-        self.Quit=wx.Button(self,wx.ID_ANY,'Cancel')
-        self.Bind(wx.EVT_BUTTON, self.Exit, self.Quit)
-        self.username=getpass.getuser()
+        self.close = wx.Button(self, wx.ID_ANY, 'Cancel')
+        self.Bind(wx.EVT_BUTTON, sys.exit, self.close)
+        self.username = getpass.getuser()
         self.__set_properties()
         self.__do_layout()
-        self.inPath()
+        self.inpath()
         self.Update()
 
     def __set_properties(self):
@@ -44,9 +48,9 @@ class MainFrame(wx.Frame):
     def __do_layout(self):
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_1 = wx.GridSizer(1, 3, 0, 0)
-        grid_sizer_2 = wx.GridSizer(1, 3, 0,0)
+        grid_sizer_2 = wx.GridSizer(1, 3, 0, 0)
         grid_sizer_3 = wx.GridSizer(1, 2, 0, 0)
-        grid_sizer_4 = wx.GridSizer(1, 2, 0,0)
+        grid_sizer_4 = wx.GridSizer(1, 2, 0, 0)
         grid_sizer_1.Add(self.filelabel, 0, 0, 0)
         grid_sizer_1.Add(self.fileentry, 0, 0, 0)
         grid_sizer_1.Add(self.browsefile, 0, 0, 0)
@@ -55,7 +59,7 @@ class MainFrame(wx.Frame):
         grid_sizer_2.Add(self.browseico, 0, 0, 0)
         grid_sizer_3.Add(self.FileType, 0, 0, 0)
         grid_sizer_3.Add(self.WindowType, 0, 0, 0)
-        grid_sizer_4.Add(self.Quit, 0, 0, 0)
+        grid_sizer_4.Add(self.close, 0, 0, 0)
         grid_sizer_4.Add(self.RunButton, 0, 0, 0)
         sizer_1.Add(grid_sizer_1, 1, 0, 0)
         sizer_1.Add(grid_sizer_2, 1, 0, 0)
@@ -66,14 +70,11 @@ class MainFrame(wx.Frame):
         self.Layout()
         sizer_1.Clear()
 
-    def Exit(self,event):
-        sys.exit()
-
-    def inPath(self):
-        if ('Python%s\\Scripts'%finalver in os.environ['path']) == False:
-            warn = wx.MessageDialog(None,'Seems you didn\'t Add Python%s\\Scripts to PATH. Please add it then restart'%finalver,'Warning',wx.OK|wx.ICON_WARNING)
+    def inpath(self):
+        if not 'Python%s\\Scripts' % finalver in os.environ['path']:
+            warn = wx.MessageDialog(None,'Seems you didn\'t Add Python%s\\Scripts to PATH. Please add it then restart' % finalver,'Warning',wx.OK|wx.ICON_WARNING)
             warn.ShowModal()
-            self.Exit(event=None)
+            sys.exit()
 
     def run(self,event):
         radioget = self.FileType.GetSelection()
