@@ -10,13 +10,13 @@ It's a GUI helps you change Python files to executable files.
 -------
 Require
 -------
-os:
--It needs Microsoft Windows OS, But you can change the code to make
-it support other OS.
 
-Python version(For Source Code):
-2.x
-wxPython
+BE SURE TO ADD PYTHON TO PATH!!!
+
+MS Windows(You can try it on other OS)
+
+Python2.x
+wxPython3.0
 
 -------
 Website
