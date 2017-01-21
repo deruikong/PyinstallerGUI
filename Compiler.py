@@ -70,10 +70,10 @@ class MainFrame(wx.Frame):
         sys.exit()
 
     def inPath(self):
-        if  'Python%s\\Scripts'%finalver in os.environ['PATH']== False:
+        if ('Python%s\\Scripts'%finalver in os.environ['path']) == False:
             warn=wx.MessageDialog(None,'Seems you didn\'t Add Python%s\\Scripts to PATH. Please add it then restart'%finalver,'Warning',wx.OK|wx.ICON_WARNING)
             warn.ShowModal()
-            sys.exit()
+            self.Exit(event=None)
 
     def run(self,event):
         radioget = self.FileType.GetSelection()
