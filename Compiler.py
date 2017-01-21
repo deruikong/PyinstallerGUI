@@ -122,7 +122,7 @@ class MainFrame(wx.Frame):
                     finishcompile.ShowModal()
                 else:
 
-                    ErroR = wx.MessageDialog(None,'You got an error during compiling, you can type %s in shell to see the error' % control,'Error', wx.OK | wx.ICON_ERROR)
+                    ErroR = wx.MessageDialog(None,'You got an error during compiling. Did you install pyinstaller correctly? Command: %s' % control,'Error', wx.OK | wx.ICON_ERROR)
                     ErroR.ShowModal()
 
 
