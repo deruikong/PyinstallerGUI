@@ -71,7 +71,7 @@ class MainFrame(wx.Frame):
 
     def inPath(self):
         if ('Python%s\\Scripts'%finalver in os.environ['path']) == False:
-            warn=wx.MessageDialog(None,'Seems you didn\'t Add Python%s\\Scripts to PATH. Please add it then restart'%finalver,'Warning',wx.OK|wx.ICON_WARNING)
+            warn = wx.MessageDialog(None,'Seems you didn\'t Add Python%s\\Scripts to PATH. Please add it then restart'%finalver,'Warning',wx.OK|wx.ICON_WARNING)
             warn.ShowModal()
             self.Exit(event=None)
 
