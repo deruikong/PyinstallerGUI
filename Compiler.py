@@ -113,12 +113,38 @@ class MainFrame(wx.Frame):
                 finishcompile.ShowModal()
             else:
 
+                filename.replace('\\',r'\\')
+                name=os.path.basename(filename)
+                if '.py' in name:
+                    if radioget==0:
+                        realname=name.replace('.py','')
+                    elif radioget==1:
+                        realname=name.replace('.py','.exe')
+                else:
+                    if radioget==0:
+                        realname=name.replace('.spec','')
+                    elif radioget==1:
+                       realname=name.replace('.spec','.exe')
+
+                if realname in str(os.listdir('%s\\dist' % os.getcwd())):
+                    finishcompile = wx.MessageDialog(None, 'Finish Compiling!', 'Info', wx.OK | wx.ICON_INFORMATION)
+                    finishcompile.ShowModal()
+                else:
+
+                    ErroR = wx.MessageDialog(None,'You got an error during compiling. Did you install pyinstaller correctly? Command: %s' % control,'Error', wx.OK | wx.ICON_ERROR)
+                    ErroR.ShowModal()
+
+
+
                 ErroR = wx.MessageDialog(None,
                                          'You got an error during compiling. Did you install pyinstaller correctly? Command: %s' % control,
                                          'Error', wx.OK | wx.ICON_ERROR)
                 ErroR.ShowModal()
         else:
+
             select = wx.MessageDialog(None, 'Please select a file!', 'Warning', wx.YES_NO | wx.ICON_INFORMATION)
+
+            select=wx.MessageDialog(None, 'Please select a python file or spec file!','Warning',wx.YES_NO|wx.ICON_INFORMATION)
             if select.ShowModal() == wx.ID_YES:
                 self.browsecomfile(event=None)
 
