@@ -89,46 +89,36 @@ class MainFrame(wx.Frame):
         elif radioget1 == 1:
             guicli = '-w'
         if '.py' in filename or '.spec' in filename:
-            try:
-                if len(self.IcoDialog.GetFilename()) == 0:
-                    control = 'pyinstaller %s %s %s'%(filetype,guicli,filename)
+            if '.ico' in self.iconentry.GetValue():
+                control = 'pyinstaller %s %s -i="%s" %s' % (filetype, guicli, self.iconentry.GetValue(), filename)
 
-                else:
-                    control = 'pyinstaller %s %s -i="%s" %s'%(filetype,guicli,self.iconentry.GetValue(),filename)
-
-            except:
-                control = 'pyinstaller %s %s %s'%(filetype,guicli,filename)
-            os.system(control)
-
-
-        if '.py' in self.fileentry.GetValue() or '.spec' in self.fileentry.GetValue():
-            if '.ico' in self.iconentry.GetValue()==False:
-                self.iconentry.Clear()
             else:
-                filename.replace('\\',r'\\')
-                name=os.path.basename(filename)
-                if '.py' in name:
-                    if radioget==0:
-                        realname=name.replace('.py','')
-                    elif radioget==1:
-                        realname=name.replace('.py','.exe')
-                elif '.spec' in name:
-                    if radioget==0:
-                        realname=name.replace('.spec','')
-                    elif radioget==1:
-                       realname=name.replace('.spec','.exe')
+                control = 'pyinstaller %s %s %s' % (filetype, guicli, filename)
+            os.system(control)
+            filename.replace('\\',r'\\')
+            name = os.path.basename(filename)
+            if '.py' in name:
+                if radioget == 0:
+                    realname = name.replace('.py', '')
+                elif radioget == 1:
+                    realname = name.replace('.py', '.exe')
+            elif '.spec' in name:
+                if radioget == 0:
+                    realname = name.replace('.spec', '')
+                elif radioget == 1:
+                    realname = name.replace('.spec', '.exe')
 
-                if realname in str(os.listdir('%s\\dist' % os.getcwd())):
-                    finishcompile = wx.MessageDialog(None, 'Finish Compiling!', 'Info', wx.OK | wx.ICON_INFORMATION)
-                    finishcompile.ShowModal()
-                else:
+            if realname in str(os.listdir('%s\\dist' % os.getcwd())):
+                finishcompile = wx.MessageDialog(None, 'Finish Compiling!', 'Info', wx.OK | wx.ICON_INFORMATION)
+                finishcompile.ShowModal()
+            else:
 
-                    ErroR = wx.MessageDialog(None,'You got an error during compiling. Did you install pyinstaller correctly? Command: %s' % control,'Error', wx.OK | wx.ICON_ERROR)
-                    ErroR.ShowModal()
-
-
+                ErroR = wx.MessageDialog(None,
+                                         'You got an error during compiling. Did you install pyinstaller correctly? Command: %s' % control,
+                                         'Error', wx.OK | wx.ICON_ERROR)
+                ErroR.ShowModal()
         else:
-            select=wx.MessageDialog(None, 'Please select a file!','Warning',wx.YES_NO|wx.ICON_INFORMATION)
+            select = wx.MessageDialog(None, 'Please select a file!', 'Warning', wx.YES_NO | wx.ICON_INFORMATION)
             if select.ShowModal() == wx.ID_YES:
                 self.browsecomfile(event=None)
 
