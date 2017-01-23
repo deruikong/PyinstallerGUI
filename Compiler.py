@@ -112,7 +112,7 @@ class MainFrame(wx.Frame):
                         realname=name.replace('.py','')
                     elif radioget==1:
                         realname=name.replace('.py','.exe')
-                elif '.spec' in name:
+                else:
                     if radioget==0:
                         realname=name.replace('.spec','')
                     elif radioget==1:
@@ -128,7 +128,7 @@ class MainFrame(wx.Frame):
 
 
         else:
-            select=wx.MessageDialog(None, 'Please select a file!','Warning',wx.YES_NO|wx.ICON_INFORMATION)
+            select=wx.MessageDialog(None, 'Please select a python file or spec file!','Warning',wx.YES_NO|wx.ICON_INFORMATION)
             if select.ShowModal() == wx.ID_YES:
                 self.browsecomfile(event=None)
 
