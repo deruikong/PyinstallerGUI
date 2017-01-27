@@ -1,7 +1,4 @@
-import wx
-import os
-import getpass
-import sys
+import wx, os, sys , getpass, ico
 
 
 def getver():
@@ -16,6 +13,7 @@ class MainFrame(wx.Frame):
     def __init__(self):
         wx.Frame.__init__(self, None, -1, 'MainFrame', size=(1000, 1000))
         self.Font = wx.Font(13, wx.SWISS, wx.NORMAL, wx.NORMAL)
+        self.SetIcon(ico.AppIcon.GetIcon())
         self.filelabel = wx.StaticText(self, wx.ID_ANY, "    File:")
         self.filelabel.SetFont(self.Font)
         self.fileentry = wx.TextCtrl(self, wx.ID_ANY, "")
