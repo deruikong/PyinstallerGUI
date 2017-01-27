@@ -13,7 +13,7 @@ Require
 
 BE SURE TO ADD PYTHON TO PATH!!!
 
-MS Windows(You can try it on other OS)
+MS Windows 64-bit(You can try it on other OS)
 
 Python2.x
 wxPython3.0
